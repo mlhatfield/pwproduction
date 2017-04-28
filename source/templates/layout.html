@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon-cogs.ico') }}">
+    <title>Vendor Management Portal!</title>
+    <!-- ChartJS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{{ url_for('static', filename='css/nprogress.css') }}" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="{{ url_for('static', filename='css/green.css') }}" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="{{ url_for('static', filename='css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="{{ url_for('static', filename='css/jqvmap.min.css') }}" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="{{ url_for('static', filename='css/daterangepicker.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/responsive.bootstrap.css') }}" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="{{ url_for('static', filename='css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/buttons.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/responsive.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/scroller.bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="{{ url_for('static', filename='css/custom.min.css') }} " rel="stylesheet">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+
+  </head>
+
+  <body class="nav-md">
+    <script type="text/javascript">
+      var currentuid ='{{ current_user.id }}';
+    </script>
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a class="site_title" href="/">
+                <img alt="PW" src="{{ url_for('static',filename='images/pw_logo.png') }}" style="width: 90%; height: auto;"/>
+              </a>
+            </div>
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+
+            <!-- /menu profile quick info -->
+
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>Overview</h3>
+                <ul class="nav side-menu">
+                  <li><a href="/"><i class="fa fa-home"></i> Home <span class="fa"></span></a></li>
+                  <li><a><i class="fa fa-envira"></i> Environment Status <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="/env/ops">Ops</a></li>
+                      <li><a href="/env/prod">Prod</a></li>
+                      <li><a href="/env/qa">QA</a></li>
+                      <li><a href="/env/dev">Dev</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-gears"></i> Operations <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="#">Jenkins <span class="label label-success pull-right">coming soon</span></a></li>
+                      <li><a href="#">Rundeck <span class="label label-success pull-right">coming soon</span></a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bar-chart-o"></i> Data Reports <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="#">SSL Status <span class="label label-success pull-right">coming soon</span></a></li>
+                      <li><a href="#">Cost Compliance <span class="label label-success pull-right">coming soon</span></a></li>
+                      <li><a href="#">Tagging Compliance <span class="label label-success pull-right">coming soon</span></a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="menu_section">
+                <h3>Settings</h3>
+                <ul class="nav side-menu">
+                  <li><a href="/user-management"><i class="fa fa-users"></i> Manage users</a></li>
+                  {% if current_user.id != "1" %}
+                  <li><a id="userpwreset_link" href="#" data-toggle="modal" data-target="#userpwreset"><i class="fa fa-laptop"></i> Change password</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a id="fs-button" data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+            <nav>
+              <div class="nav toggle">
+                <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="/logout">
+                    Sign-Out
+                  </a>
+                </li>
+                <li class="">
+                  <span class="badge">{{current_user.name}}</span>
+                  <span class="badge bg-green">{{current_user.role}}</span>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+        <!-- /top navigation -->
+
+        {% block content %}
+
+        {% endblock %}
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+      </div>
+    </div>
+
+    <!-- Modal -->
+    {% include "user-pwreset-modal.html" %}
+
+    <!-- jQuery -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ url_for('static', filename='js/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ url_for('static', filename='js/nprogress.js') }}"></script>
+    <!-- Chart.js -->
+    <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+    <!-- gauge.js -->
+    <script src="{{ url_for('static', filename='js/gauge.min.js') }}"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="{{ url_for('static', filename='js/bootstrap-progressbar.min.js') }}"></script>
+    <!-- iCheck -->
+    <script src="{{ url_for('static', filename='js/icheck.min.js') }}"></script>
+    <!-- Skycons -->
+    <script src="{{ url_for('static', filename='js/skycons.js') }}"></script>
+    <!-- Flot -->
+    <script src="{{ url_for('static', filename='js/jquery.flot.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.flot.pie.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.flot.time.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.flot.stack.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.flot.resize.js') }}"></script>
+    <!-- Flot plugins -->
+    <script src="{{ url_for('static', filename='js/jquery.flot.orderBars.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.flot.spline.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/curvedLines.js') }}"></script>
+    <!-- DateJS -->
+    <script src="{{ url_for('static', filename='js/date.js') }}"></script>
+    <!-- JQVMap -->
+    <script src="{{ url_for('static', filename='js/jquery.vmap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.vmap.world.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.vmap.sampledata.js') }}"></script>
+    <!-- ECharts -->
+    <script src="{{ url_for('static', filename='js/echarts.min.js') }}"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/eventhandler.js') }}"></script>
+
+    <!-- Datatables -->
+    <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/buttons.flash.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/buttons.html5.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/buttons.print.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.fixedHeader.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.keyTable.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dataTables.scroller.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/validator.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatable-custom.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+.row.content {height: auto}
+
+/* Set gray background color and 100% height */
+.sidenav {
+  background-color: #f1f1f1;
+  height: 100%;
+}
+
+/* On small screens, set height to 'auto' for the grid */
+@media screen and (max-width: 767px) {
+  .row.content {height: auto;}
+}
+
+#ownerheader {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.panel-group  {
+  margin-left: 15%;
+}
+
+table { table-layout: fixed; }
+
+td.even {
+  width: 25%;
+}
+tr.lsi-th {
+  font-weight: bold;
+  font-size: small;
+
+}
+
+td.lsi-td {
+  font-size: small;
+  word-wrap: break-word;
+}
+
+.chart {
+  margin-left: 20%;
+}
+
+.withnav {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  margin-top: 1%;
+  margin-left: 17%;
+}
+
+.withnav.toggled {
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+.panel-body div{
+  min-height: inherit;
+  max-height: 30%;
+  overflow-y: scroll;
+}
+
+div.well.divclick {
+    height: 100px;
+    overflow-x: hidden;
+    word-wrap: break-word;
+}
+
+ul.nav.nav-tabs {
+  height: 50px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+
+div.well.bg-green {
+  cursor: auto;
+  font-size: small;
+  height: 120px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+
+div.well.yellow {
+  cursor: auto;
+  background-color: #D3E397;
+  font-size: small;
+  height: 120px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+
+div.well.grey {
+  cursor: auto;
+  font-size: small;
+  color: #f1f1f1;
+  background-color: #7C786A;
+  height: 120px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+div.well.grey:hover, div.well.bg-green:hover, div.well.yellow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+td.green {
+  background-color: #8DCDC1;
+}
+
+td.yellow {
+  background-color: #D3E397;
+}
+
+td.grey {
+  color: #f1f1f1;
+  background-color: #7C786A;
+}
+
+div.tab-content {
+  text-align: left;
+}
+
+#cluster-details {
+  display:none;
+}
+
+.owner {
+  display:inline;
+}
+
+.right {
+  margin-right: 5%;
+  float: right;
+}
+
+
+/*nav toggle*/
+#wrapper {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  margin: 0;
+
+}
+
+#wrapper.toggled {
+  margin-left: -25%;
+}

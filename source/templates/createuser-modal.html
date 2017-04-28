@@ -1,0 +1,50 @@
+<!-- Modal -->
+<div class="modal" id="createusermodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body form-horizontal">
+        <form id="create_user_form" class="form-horizontal form-label-left" validate>
+          <span class="section">User Info</span>
+
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">User Name <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="newusername" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" data-validate-words="1" name="name" placeholder="e.g jdoe" required="required" type="text">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email">Email <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="email" id="newuseremail" name="email" required="required" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="occupation">Site <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="newuserole" type="text" name="occupation" data-validate-length-range="1,20" data-validate-words="1" class="optional form-control col-md-7 col-xs-12" required="required">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label for="createpassword" class="control-label col-md-3">Password</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="password" type="password" name="createpassword" data-validate-length="1,12" class="form-control col-md-7 col-xs-12" required="required">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Repeat Password</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="newuserpw" type="password" name="newuserpw" data-validate-linked="createpassword" class="form-control col-md-7 col-xs-12" required="required">
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button data-dismiss="modal" class="btn btn-primary">Cancel</button>
+              <button id="createuser_modal_save" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

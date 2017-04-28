@@ -1,0 +1,40 @@
+<!-- Modal -->
+<div class="modal" id="pwresetmodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+          <h3>Change Password <span class="extra-title muted"></span></h3>
+          <p class="pwname">user name:</p>
+      </div>
+      <div class="modal-body form-horizontal">
+        <form id=pwreset_form class="form-horizontal form-label-left" novalidate>
+          <div class="item form-group">
+            <label for="password" class="control-label col-md-3">Password</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="pwreset_new_pass" type="password" name="password" data-validate-length="6,8" class="form-control col-md-7 col-xs-12" required="required">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label for="password2" class="control-label col-md-3 col-sm-3 col-xs-12">Repeat Password</label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="pwreset_confirm_pass" type="password" name="password2" data-validate-linked="password" class="form-control col-md-7 col-xs-12" required="required">
+            </div>
+          </div>
+
+          <div class="ln_solid"></div>
+          <div class="form-group">
+            <div class="col-md-6 col-md-offset-3">
+              <button href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+              <button href="#" class="btn btn-success btn-sm" id="pwreset_modal_save">Save changes</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <!-- <div class="modal-footer">
+          <button href="#" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+          <button href="#" class="btn btn-success btn-sm" id="pwreset_modal_save">Save changes</button>
+      </div> -->
+    </div>
+  </div>
+</div>

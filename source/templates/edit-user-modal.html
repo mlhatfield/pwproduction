@@ -1,0 +1,39 @@
+<!-- Modal -->
+<div class="modal" id="editusermodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body form-horizontal">
+        <form id="edit_user_form" class="form-horizontal form-label-left" novalidate>
+          <span class="section">User Info</span>
+
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editusername">User Name <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editusername" class="form-control col-md-7 col-xs-12" data-validate-length-range="3" data-validate-words="1" name="editusername" required="required" type="text">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="edituseremail">Email <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input type="email" id="edituseremail" name="edituseremail" required="required" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="edituserole">Site <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="edituserole" type="text" name="edituserole" required="required" data-validate-length-range="1,20" data-validate-words="1" class="optional form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+              <button data-dismiss="modal" class="btn btn-primary">Cancel</button>
+              <button id="edituser_modal_save" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

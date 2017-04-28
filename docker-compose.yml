@@ -1,0 +1,9 @@
+website:
+  build: source
+  ports:
+    - "80:5001"
+  environment:
+    - ADMIN_PW=admin
+    - ADMIN_EMAIL=admin@company.com
+    - ADMIN_USERNAME=admin
+    - ADMIN_ID=1
