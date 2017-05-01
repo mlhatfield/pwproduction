@@ -65,25 +65,17 @@
                 <h3>Overview</h3>
                 <ul class="nav side-menu">
                   <li><a href="/"><i class="fa fa-home"></i> Home <span class="fa"></span></a></li>
-                  <li><a><i class="fa fa-envira"></i> Environment Status <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-gears"></i>Labor Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/env/ops">Ops</a></li>
-                      <li><a href="/env/prod">Prod</a></li>
-                      <li><a href="/env/qa">QA</a></li>
-                      <li><a href="/env/dev">Dev</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-gears"></i> Operations <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/po-management">PO Management</a></li>
-                      <li><a href="#">Rundeck <span class="label label-success pull-right">coming soon</span></a></li>
+                      <li><a href="/po-management">Log Labor</a></li>
+                      <li><a href="#">Upload Labor Sheet <span class="label label-success pull-right">coming soon</span></a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Data Reports <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">SSL Status <span class="label label-success pull-right">coming soon</span></a></li>
-                      <li><a href="#">Cost Compliance <span class="label label-success pull-right">coming soon</span></a></li>
-                      <li><a href="#">Tagging Compliance <span class="label label-success pull-right">coming soon</span></a></li>
+                      <li><a href="#">Labor Report <span class="label label-success pull-right">coming soon</span></a></li>
+                      <!-- <li><a href="#">Cost Compliance <span class="label label-success pull-right">coming soon</span></a></li>
+                      <li><a href="#">Tagging Compliance <span class="label label-success pull-right">coming soon</span></a></li> -->
                     </ul>
                   </li>
                 </ul>
@@ -91,6 +83,7 @@
               <div class="menu_section">
                 <h3>Settings</h3>
                 <ul class="nav side-menu">
+                  <li><a href="#"><i class="fa fa-gear"></i> Labor Tables</a></li>
                   <li><a href="/user-management"><i class="fa fa-users"></i> Manage users</a></li>
                   {% if current_user.id != "1" %}
                   <li><a id="userpwreset_link" href="#" data-toggle="modal" data-target="#userpwreset"><i class="fa fa-laptop"></i> Change password</a></li>

@@ -222,7 +222,7 @@ def user_delete():
         conn = sqlite3.connect('users.db')
         c = conn.cursor()
         uid = data["userid"]
-        strqry = """DELETE users WHERE uid = '{}' """.format(uid)
+        strqry = """DELETE from users WHERE uid = '{}' """.format(uid)
         q = c.execute(strqry)
         conn.commit()
         conn.close()
@@ -255,10 +255,9 @@ def create_po_entry():
         ponum = data["ponum"]
         polabor = data["polabor"]
         podate = data["podate"]
-        strqry = """INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')""".format(u,
-                                                                        "Jims Site",
-                                                                        ponum, podate,
-                                                                        polabor, "Jimmy Sweeney", "8",False)
+        poworker = data["poworker"]
+        pounit = data["pounit"]
+        strqry = """INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')""".format(u,"test-site", ponum, podate, polabor, poworker, pounit,False)
         conn = sqlite3.connect('labor.db')
         c = conn.cursor()
         q = c.execute(strqry)
@@ -271,8 +270,19 @@ def update_po_entry():
     u = User(flask_login.current_user.role)
     if request.method == 'POST':
         data = json.loads(request.data)
-
-    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+        porowid = data["porowid"]
+        ponum = data["ponum"]
+        polabor = data["polabor"]
+        podate = data["podate"]
+        pounit = data["pounit"]
+        poworker = data["poworker"]
+        strqry = """UPDATE labor SET po = '{}', podate = '{}', labortype = '{}', workername = '{}', units = '{}' WHERE rowid = '{}' """.format(ponum,podate,polabor,poworker,pounit,porowid)
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        conn.commit()
+        conn.close()
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route("/delete-po-entry", methods=["POST"])
 def delete_po_entry():

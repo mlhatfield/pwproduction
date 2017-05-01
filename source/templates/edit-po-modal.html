@@ -1,0 +1,58 @@
+<!-- Modal -->
+<div class="modal" id="poeditmodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body form-horizontal">
+        <form id="edit_user_form" class="form-horizontal form-label-left" novalidate>
+          <span class="section">Edit Labor Log</span>
+          <p id="editporow"></p>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editpodate">Date <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editpodate" class="form-control col-md-7 col-xs-12" name="editpodate" required="required" type="date">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editponum">PO # <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editponum" name="editponum" required="required" type="text" data-validate-length-range="1,20" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editpoworker">Employee <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editpoworker" type="text" name="editpoworker" required="required" data-validate-length-range="1,20" data-validate-words="2" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editpolabor">Labor Type <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <select id="editpolabor">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              </select>
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editpounit">Units <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editpounit" type="number" name="editpounit" required="required" data-validate-minmax="0,10000"  min="0" step="0.01" value="0" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+
+          <div class="modal-footer">
+              <button data-dismiss="modal" class="btn btn-primary">Cancel</button>
+              <button id="editpo_modal_save" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

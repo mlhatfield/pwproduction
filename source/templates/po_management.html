@@ -9,23 +9,32 @@
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
-        <!-- <table class="table table-striped table-bordered">
-          <tr>
-            <th>
-              <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="ponum">PO #: <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input id="ponum" type="text" name="ponum" data-validate-words="1" data-validate-length-range="1,20" class="form-control col-md-7 col-xs-12" required="required">
-                </div>
-              </div>
-            </th>
-            <th>Date</th>
-            <th>PO</th>
-            <th>Labor Type</th>
-            <th>Action</th>
-          </tr>
-        </table> -->
+
+          <div class="clearfix"></div>
+            <div class="col-md-6 col-sm-6 col-xs-12 form-group pull-left">
+              PO #: <input id="ponum" type="text">
+            </div>
+          <div class="clearfix"></div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-left">
+              Date: <input id="podate" type="date">
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-left">
+              Employee: <input id="poworker" type="text" data-validate-words="2" data-validate-length-range="1,20">
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-left">
+              Labor Type: <select id="polabor">
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+              </select>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-left">
+              Units: <input id="pounit" type="number" name="units" min="0" step="0.01" value="0">
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-left">
+              <a id="addpo" href="#"><i class="fa fa-plus"></i> Add Entry</a>
+            </div>
         <!-- <p><button href="#" class="btn btn-success btn-sm" id="create_po_btn" data-toggle="modal" data-target="#createpomodal">New PO</button></p> -->
         <table id="datatable-po" class="table table-striped table-bordered datatable-buttons">
           <thead>
@@ -33,43 +42,23 @@
               <th>Id</th>
               <th>Date</th>
               <th>PO</th>
+              <th>Employee</th>
               <th>Labor Type</th>
+              <th>Units</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td></td>
-              <td>
-                <input id="podate" type="date">
-              </td>
-              <td>
-                <select >
-                  <option value="111">111</option>
-                  <option value="112">112</option>
-                  <option value="113">113</option>
-                </select>
-              </td>
-              <td>
-                <select id="polabor">
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
-                </select>
-              </td>
-              <td>
-                  <a id="addpo" href="#"><i class="fa fa-plus"></i></a>
-              </td>
-            </tr>
             {% for r in labor_data %}
             <tr>
               <td>{{r[8]}}</td>
               <td>{{r[3]}}</td>
               <td>{{r[2]}}</td>
+              <td>{{r[5]}}</td>
               <td>{{r[4]}}</td>
+              <td>{{r[6]}}</td>
               <td>
-                  <a class="editablepo" href="#"><i class="fa fa-pencil"></i></a>
+                  <a class="editpo" href="#"><i class="fa fa-pencil"></i></a>
                   <a class="delpo" href="#"><i class="fa fa-trash"></i></a>
               </td>
             </tr>
@@ -81,6 +70,7 @@
   </div>
 </div>
 
+{% include "edit-po-modal.html" %}
 
 <!-- page content -->
 {% endblock %}

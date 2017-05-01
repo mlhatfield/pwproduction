@@ -6,33 +6,24 @@ $(document).ready(function() {
   };
   $("#podate").val(moment().format('YYYY-MM-DD'));
 
-  $( ".podate" ).change(function() {
-    d = $( ".podate" ).val();
-    var s = $(this).closest('tr').find('td:eq(1)').val();
-    // alert( "Handler for "+s );
-  });
-
-  $('#po-add-btn').click(function(){
-    console.log("Clicker add");
-    $.ajax({
-      type: "POST",
-      contentType: "application/json; charset=utf-8",
-      url: "/create-po-entry",
-      data: JSON.stringify({}),
-      success: function (data) {
-        console.log("Adding");
-        window.location.reload();
-      },
-      dataType: "json"
-    });
-  });
-
   $("#addpo").click(function(){
     var ponum = $("#ponum").val();
     $.cookie('ponumcookie', ponum);
     var polabor = $("#polabor option:selected").val();
     var podate = $("#podate").val();
-    CreatePO(ponum, polabor, podate);
+    var pounit = $("#pounit").val();
+    var poworker = $("#poworker").val();
+    CreatePO(ponum, polabor, podate, pounit, poworker);
+  });
+
+  $(".editpo").click(function(){
+    $("#editporow").val($(this).closest('tr').find('td:eq(0)').text());
+    $("#editpodate").val($(this).closest('tr').find('td:eq(1)').text());
+    $("#editponum").val($(this).closest('tr').find('td:eq(2)').text());
+    $("#editpoworker").val($(this).closest('tr').find('td:eq(3)').text());
+    $("#editpolabor").val($(this).closest('tr').find('td:eq(4)').text());
+    $("#editpounit").val($(this).closest('tr').find('td:eq(5)').text());
+    $("#poeditmodal").modal('toggle');
   });
 
   $(".delpo").click(function(){
@@ -40,26 +31,35 @@ $(document).ready(function() {
     DeletePO(rowid);
   });
 
-  function CreatePO(ponum, polabor, podate){
+  $("#editpo_modal_save").click(function(){
+    var rowid = $("#editporow").val();
+    var podate = $("#editpodate").val();
+    var ponum = $("#editponum").val();
+    var poworker = $("#editpoworker").val();
+    var polabor = $("#editpolabor").val();
+    var pounit = $("#editpounit").val();
+    UpdatePO(rowid, ponum, polabor, podate, pounit, poworker);
+  });
+
+  function CreatePO(ponum, polabor, podate, pounit, poworker){
     $.ajax({
       type: "POST",
       contentType: "application/json; charset=utf-8",
       url: "/create-po-entry",
-      data: JSON.stringify({"ponum":ponum,"polabor":polabor,"podate":podate}),
+      data: JSON.stringify({"ponum":ponum,"polabor":polabor,"podate":podate,"pounit":pounit,"poworker":poworker}),
       success: function (data) {
         window.location.reload();
       },
       dataType: "json"
     });
-    // window.location.reload();
   }
 
-  function UpdatePO(po){
+  function UpdatePO(porowid, ponum, polabor, podate, pounit, poworker){
     $.ajax({
       type: "POST",
       contentType: "application/json; charset=utf-8",
       url: "/update-po-entry",
-      data: JSON.stringify({"po":po}),
+      data: JSON.stringify({"porowid":porowid,"ponum":ponum,"polabor":polabor,"podate":podate,"pounit":pounit,"poworker":poworker}),
       success: function (data) {
         window.location.reload();
       },
