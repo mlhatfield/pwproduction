@@ -41,6 +41,23 @@ $(document).ready(function() {
     UpdatePO(rowid, ponum, polabor, podate, pounit, poworker);
   });
 
+  $("#submit_pos_btn").click(function(){
+    SubmitPOs();
+  });
+
+  function SubmitPOs(){
+    $.ajax({
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      url: "/submit-site-pos",
+      data: JSON.stringify({}),
+      success: function (data) {
+        window.location.reload();
+      },
+      dataType: "json"
+    });
+  }
+
   function CreatePO(ponum, polabor, podate, pounit, poworker){
     $.ajax({
       type: "POST",

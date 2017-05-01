@@ -299,5 +299,18 @@ def delete_po_entry():
         conn.close()
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
+@app.route("/submit-site-pos", methods=["POST"])
+def submit_site_pos():
+    u = User(flask_login.current_user.role)
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        strqry = """UPDATE labor SET submitted = 'True' WHERE siteid = '{}'""".format(u)
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        conn.commit()
+        conn.close()
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, threaded=True, debug=True)
