@@ -33,6 +33,17 @@ if os.path.exists('users.db') == False:
     c.execute(q)
     conn.commit()
 
+if os.path.exists('labor.db') == False:
+    with sqlite3.connect('labor.db') as f:
+        pass
+    conn = sqlite3.connect('labor.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE labor (siteid text, sitename text, po text, podate date, labortype text, workername text, units text, submitted boolean)''')
+    q = '''INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')'''.format("admin",
+                                                                    "Jims Site","111", "01/01/1999","forklift", "Jimm Sweeney", "8",False)
+    c.execute(q)
+    conn.commit()
+
 app = Flask(__name__)
 
 # config
@@ -162,7 +173,7 @@ def user_pw_reset():
         q = c.execute(strqry)
         conn.commit()
         conn.close()
-        return "success"
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route("/create-user", methods=["POST"])
 def user_create():
@@ -186,7 +197,7 @@ def user_create():
             q = c.execute(strqry)
             conn.commit()
         conn.close()
-        return "success"
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route("/update-user", methods=["POST"])
 def user_edit():
@@ -202,7 +213,7 @@ def user_edit():
         q = c.execute(strqry)
         conn.commit()
         conn.close()
-        return "success"
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route("/delete-user", methods=["POST"])
 def user_delete():
@@ -215,7 +226,68 @@ def user_delete():
         q = c.execute(strqry)
         conn.commit()
         conn.close()
-        return "success"
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+
+@app.route("/po-management", methods=["GET","POST"])
+@login_required
+def po_management():
+    u = User(flask_login.current_user.role)
+    conn = sqlite3.connect('labor.db')
+    c = conn.cursor()
+    if str(u) == "admin":
+        print("1",file=sys.stderr)
+        strqry = """SELECT siteid, sitename, po, podate, labortype, workername, units, submitted, rowid FROM labor WHERE submitted = 'False'"""
+    else:
+        print("2",file=sys.stderr)
+        strqry = """SELECT siteid, sitename, po, podate, labortype, workername, units, submitted, rowid FROM labor WHERE siteid = '{}' AND submitted = 'False'""".format(u)
+    q = c.execute(strqry)
+    labor_data = [row for row in q]
+    conn.close()
+    print(u,file=sys.stderr)
+    return render_template('po_management.html', labor_data=labor_data)
+
+@app.route("/create-po-entry", methods=["POST"])
+def create_po_entry():
+    u = User(flask_login.current_user.role)
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        ponum = data["ponum"]
+        polabor = data["polabor"]
+        podate = data["podate"]
+        strqry = """INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')""".format(u,
+                                                                        "Jims Site",
+                                                                        ponum, podate,
+                                                                        polabor, "Jimmy Sweeney", "8",False)
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        conn.commit()
+        conn.close()
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/update-po-entry", methods=["POST"])
+def update_po_entry():
+    u = User(flask_login.current_user.role)
+    if request.method == 'POST':
+        data = json.loads(request.data)
+
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/delete-po-entry", methods=["POST"])
+def delete_po_entry():
+    u = User(flask_login.current_user.role)
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        porowid = data["porowid"]
+        print(porowid,file=sys.stderr)
+        strqry = """DELETE from labor WHERE rowid = '{}' """.format(porowid)
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        conn.commit()
+        conn.close()
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, threaded=True, debug=True)

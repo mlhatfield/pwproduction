@@ -2512,9 +2512,9 @@ if (typeof NProgress != 'undefined') {
 
 
 				var handleDataTableButtons = function() {
-				  if ($("#datatable-buttons").length) {
+				  if ($(".datatable-buttons").length) {
 
-					$("#datatable-buttons").DataTable({
+					$(".datatable-buttons").DataTable({
 					  dom: "Bfrtip",
 					  buttons: [
 						{
