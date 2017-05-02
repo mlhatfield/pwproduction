@@ -2553,6 +2553,7 @@ if (typeof NProgress != 'undefined') {
 				}();
 
 				$('#datatable').dataTable();
+        $('.datatable').dataTable();
 
 				$('#datatable-keytable').DataTable({
 				  keys: true

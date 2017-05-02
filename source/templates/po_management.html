@@ -23,10 +23,9 @@
             </div>
             <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-left">
               Labor Type: <select id="polabor">
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="mercedes">Mercedes</option>
-                <option value="audi">Audi</option>
+                {% for t in  labor_selections %}
+                  <option value="{{t[0]}}">{{t[0]}}</option>
+                {% endfor %}
               </select>
             </div>
             <div class="col-md-3 col-sm-3 col-xs-12 form-group pull-left">

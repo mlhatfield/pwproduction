@@ -42,6 +42,10 @@ if os.path.exists('labor.db') == False:
     q = '''INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')'''.format("admin",
                                                                     "Jims Site","111", "01/01/1999","forklift", "Jimm Sweeney", "8",False)
     c.execute(q)
+
+    c.execute('''CREATE TABLE rate (labortype text, payrate REAL, billrate REAL, uom text)''')
+    c.execute('''INSERT INTO rate VALUES ('General Labor Hourly','10.11','13.0000','Hour')''')
+
     conn.commit()
 
 app = Flask(__name__)
@@ -228,7 +232,6 @@ def user_delete():
         conn.close()
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
-
 @app.route("/po-management", methods=["GET","POST"])
 @login_required
 def po_management():
@@ -243,9 +246,13 @@ def po_management():
         strqry = """SELECT siteid, sitename, po, podate, labortype, workername, units, submitted, rowid FROM labor WHERE siteid = '{}' AND submitted = 'False'""".format(u)
     q = c.execute(strqry)
     labor_data = [row for row in q]
+
+    strqry = """SELECT labortype FROM rate"""
+    q = c.execute(strqry)
+    labor_selections = [row for row in q]
     conn.close()
     print(u,file=sys.stderr)
-    return render_template('po_management.html', labor_data=labor_data)
+    return render_template('po_management.html', labor_data=labor_data, labor_selections=labor_selections)
 
 @app.route("/create-po-entry", methods=["POST"])
 def create_po_entry():
@@ -305,6 +312,71 @@ def submit_site_pos():
     if request.method == 'POST':
         data = json.loads(request.data)
         strqry = """UPDATE labor SET submitted = 'True' WHERE siteid = '{}'""".format(u)
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        conn.commit()
+        conn.close()
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/labor-tables", methods=["GET","POST"])
+@login_required
+def labor_tables():
+    u = User(flask_login.current_user.role)
+    print(u,file=sys.stderr)
+    if str(u) != "admin":
+        return abort(401)
+    else:
+        strqry = """SELECT *, rowid FROM rate"""
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        rate_data = [row for row in q]
+        conn.close()
+        return render_template('labor_tables.html',rate_data=rate_data)
+
+@app.route("/create-labor-entry", methods=["POST"])
+def create_labor_entry():
+    u = User(flask_login.current_user.role)
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        labortype = data["labortype"]
+        payrate = data["laborpay"]
+        billrate = data["laborbill"]
+        uom = data["laboruom"]
+        strqry = """INSERT INTO rate VALUES ('{}','{}','{}','{}')""".format(labortype, payrate, billrate, uom)
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        conn.commit()
+        conn.close()
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/update-labor-entry", methods=["POST"])
+def update_labor_entry():
+    u = User(flask_login.current_user.role)
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        laborrowid = data["laborrowid"]
+        labortype = data["labortype"]
+        laboruom = data["laboruom"]
+        laborpay = data["laborpay"]
+        laborbill = data["laborbill"]
+        strqry = """UPDATE rate SET labortype = '{}', uom = '{}', payrate = '{}', billrate = '{}' WHERE rowid = '{}' """.format(labortype,laboruom,laborpay,laborbill,laborrowid)
+        conn = sqlite3.connect('labor.db')
+        c = conn.cursor()
+        q = c.execute(strqry)
+        conn.commit()
+        conn.close()
+        return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/delete-labor-entry", methods=["POST"])
+def delete_labor_entry():
+    u = User(flask_login.current_user.role)
+    if request.method == 'POST':
+        data = json.loads(request.data)
+        laborrowid = data["laborrowid"]
+        strqry = """DELETE from rate WHERE rowid = '{}' """.format(laborrowid)
         conn = sqlite3.connect('labor.db')
         c = conn.cursor()
         q = c.execute(strqry)

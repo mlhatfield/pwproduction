@@ -45,6 +45,76 @@ $(document).ready(function() {
     SubmitPOs();
   });
 
+  $("#addlabor").click(function(){
+    var labortype = $("#labortype").val();
+    var laboruom = $("#laboruom option:selected").val();
+    var laborpay = $("#laborpay").val();
+    var laborbill = $("#laborbill").val();
+    CreateLabor(labortype, laboruom, laborpay, laborbill);
+  });
+
+  $(".dellabor").click(function(){
+    var laborrowid = $(this).closest('tr').find('td:eq(0)').text();
+    DeleteLabor(laborrowid);
+  });
+
+  $(".editlabor").click(function(){
+    $("#editlaborrow").val($(this).closest('tr').find('td:eq(0)').text());
+    $("#editlabortype").val($(this).closest('tr').find('td:eq(1)').text());
+    $("#editlaborpay").val($(this).closest('tr').find('td:eq(2)').text());
+    $("#editlaborbill").val($(this).closest('tr').find('td:eq(3)').text());
+    $("#editlaborunit").val($(this).closest('tr').find('td:eq(4)').text());
+    $("#laboreditmodal").modal('toggle');
+  });
+
+  $("#editlabor_modal_save").click(function(){
+    var laborrowid = $("#editlaborrow").val();
+    var labortype = $("#editlabortype").val();
+    var laborpay = $("#editlaborpay").val();
+    var laborbill = $("#editlaborbill").val();
+    var laboruom = $("#editlaborunit").val();
+    UpdateLabor(laborrowid, labortype, laboruom, laborpay, laborbill);
+  });
+
+  function CreateLabor(labortype, laboruom, laborpay, laborbill){
+    $.ajax({
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      url: "/create-labor-entry",
+      data: JSON.stringify({"labortype":labortype,"laboruom":laboruom,"laborpay":laborpay,"laborbill":laborbill}),
+      success: function (data) {
+        window.location.reload();
+      },
+      dataType: "json"
+    });
+  }
+
+  function UpdateLabor(laborrowid, labortype, laboruom, laborpay, laborbill){
+    $.ajax({
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      url: "/update-labor-entry",
+      data: JSON.stringify({"laborrowid":laborrowid,"labortype":labortype,"laboruom":laboruom,"laborpay":laborpay,"laborbill":laborbill}),
+      success: function (data) {
+        window.location.reload();
+      },
+      dataType: "json"
+    });
+  }
+
+  function DeleteLabor(laborrowid){
+    $.ajax({
+      type: "POST",
+      contentType: "application/json; charset=utf-8",
+      url: "/delete-labor-entry",
+      data: JSON.stringify({"laborrowid":laborrowid}),
+      success: function (data) {
+        window.location.reload();
+      },
+      dataType: "json"
+    });
+  }
+
   function SubmitPOs(){
     $.ajax({
       type: "POST",

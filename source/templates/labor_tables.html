@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<!-- page content -->
+<div class="right_col" role="main">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#labor-rates">Labor Rates</a></li>
+              <li><a data-toggle="tab" href="#employees">Employees</a></li>
+              <li><a data-toggle="tab" href="#sites">Sites</a></li>
+              <li><a data-toggle="tab" href="#cost-tables">Cost Table</a></li>
+            </ul>
+            <div class="tab-content">
+
+              <div id="labor-rates" class="tab-pane fade in active">
+                <div class="x_content">
+                    <div class="clearfix"></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      Labor Type: <input id="labortype" type="text">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      Pay Rate: <input id="laborpay" type="number" name="units" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      Bill Rate: <input id="laborbill" type="number" name="units" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      UoM: <select id="laboruom">
+                        <option value="Hour">Hour</option>
+                        <option value="Unit">Unit</option>
+                      </select>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      <a id="addlabor" href="#"><i class="fa fa-plus"></i> Add Entry</a>
+                    </div>
+
+                  <table id="labor-rate-table" class="table table-striped table-bordered datatable">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Type</th>
+                        <th>Pay Rate</th>
+                        <th>Bill Rate</th>
+                        <th>UoM</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for entry in rate_data %}
+                      <tr>
+                        <td>{{ entry[4] }}</td>
+                        <td>{{ entry[0] }}</td>
+                        <td>{{ entry[1] }}</td>
+                        <td>{{ entry[2] }}</td>
+                        <td>{{ entry[3] }}</td>
+                        <td>
+                            <a class="editlabor" href="#"><i class="fa fa-pencil"></i></a>
+                            <a class="dellabor" href="#"><i class="fa fa-trash"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    <tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div id="employees" class="tab-pane fade" role="tabpanel">
+                employees
+              </div>
+
+              <div id="sites" class="tab-pane fade" role="tabpanel">
+                sites
+              </div>
+
+              <div id="cost-tables" class="tab-pane fade" role="tabpanel">
+                cost-tables
+              </div>
+            </div>
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "edit-labor-modal.html" %}
+
+<!-- page content -->
+{% endblock %}
