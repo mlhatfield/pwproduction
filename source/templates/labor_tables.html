@@ -72,26 +72,149 @@
               </div>
 
               <div id="employees" class="tab-pane fade" role="tabpanel">
-                employees
+
+                  <div class="x_content">
+                      <div class="clearfix"></div>
+                      <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                        Employee: <input id="employeename" name="employeename" required="required" type="text" data-validate-words="2" data-validate-length-range="1,50">
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                        EE #: <input id="employeeid" type="text" name="employeeid" required="required" data-validate-length-range="1,50">
+                      </div>
+                      <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                        <a id="addemployee" href="#"><i class="fa fa-plus"></i> Add Entry</a>
+                      </div>
+
+                    <table id="employee-table" class="table table-striped table-bordered datatable">
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Employee</th>
+                          <th>EE#</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for e in employee_data %}
+                        <tr>
+                          <td>{{ e[2] }}</td>
+                          <td>{{ e[0] }}</td>
+                          <td>{{ e[1] }}</td>
+                          <td>
+                              <a class="editemployee" href="#"><i class="fa fa-pencil"></i></a>
+                              <a class="delemployee" href="#"><i class="fa fa-trash"></i></a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      <tbody>
+                    </table>
+                  </div>
+
               </div>
 
               <div id="sites" class="tab-pane fade" role="tabpanel">
-                sites
+
+                <div class="x_content">
+                    <div class="clearfix"></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      Site Name: <input id="sitename" type="text" required="required" data-validate-length-range="1,50">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      Site Id: <input id="siteid" type="number" required="required" data-validate-minmax="0,1000000" min="0" step="1">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      <a id="addsite" href="#"><i class="fa fa-plus"></i> Add Entry</a>
+                    </div>
+
+                  <table id="site-table" class="table table-striped table-bordered datatable">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Site</th>
+                        <th>Site Id</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for s in site_data %}
+                      <tr>
+                        <td>{{ s[2] }}</td>
+                        <td>{{ s[0] }}</td>
+                        <td>{{ s[1] }}</td>
+                        <td>
+                            <a class="editsite" href="#"><i class="fa fa-pencil"></i></a>
+                            <a class="delsite" href="#"><i class="fa fa-trash"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    <tbody>
+                  </table>
+                </div>
+
               </div>
 
               <div id="cost-tables" class="tab-pane fade" role="tabpanel">
-                cost-tables
+
+                <div class="x_content">
+                    <div class="clearfix"></div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      Cost: <input id="costtype" type="text" data-validate-words="2" data-validate-length-range="1,20">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      Amount: <input id="costamount" type="text" data-validate-length-range="1,20">
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      UoM: <select id="costuom">
+                          <option value="dollar">dollar</option>
+                          <option value="number">number</option>
+                          <option value="percent">percent</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
+                      <a id="addcost" href="#"><i class="fa fa-plus"></i> Add Entry</a>
+                    </div>
+
+                  <table id="cost-table" class="table table-striped table-bordered datatable">
+                    <thead>
+                      <tr>
+                        <th>Id</th>
+                        <th>Cost</th>
+                        <th>Amount</th>
+                        <th>UoM</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for cost in cost_data %}
+                      <tr>
+                        <td>{{ cost[3] }}</td>
+                        <td>{{ cost[0] }}</td>
+                        <td>{{ cost[1] }}</td>
+                        <td>{{ cost[2] }}</td>
+                        <td>
+                            <a class="editcost" href="#"><i class="fa fa-pencil"></i></a>
+                            <a class="delcost" href="#"><i class="fa fa-trash"></i></a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    <tbody>
+                  </table>
+                </div>
+
               </div>
+
+
             </div>
           </div>
-
-
       </div>
     </div>
   </div>
 </div>
 
 {% include "edit-labor-modal.html" %}
+{% include "edit-employees-modal.html" %}
+{% include "edit-sites-modal.html" %}
+{% include "edit-costs-modal.html" %}
 
 <!-- page content -->
 {% endblock %}

@@ -1,0 +1,43 @@
+<!-- Modal -->
+<div class="modal" id="costeditmodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body form-horizontal">
+        <form id="edit_user_form" class="form-horizontal form-label-left" novalidate>
+          <span class="section">Edit Labor Rate</span>
+          <p id="editcostrow"></p>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editcosttype">Cost <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editcosttype" name="editcosttype" required="required" type="text" data-validate-length-range="1,20" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editcostamount">Amount <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editcostamount" type="number" name="editcostamount" required="required" data-validate-minmax="0,100000" min="0" step="0.01" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editcostuom">UoM <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <select id="editcostuom">
+                <option value="dollar">dollar</option>
+                <option value="number">number</option>
+                <option value="percent">percent</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+              <button data-dismiss="modal" class="btn btn-primary">Cancel</button>
+              <button id="editcost_modal_save" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

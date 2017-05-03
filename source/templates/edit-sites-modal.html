@@ -1,0 +1,31 @@
+<!-- Modal -->
+<div class="modal" id="siteeditmodal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body form-horizontal">
+        <form id="edit_user_form" class="form-horizontal form-label-left" novalidate>
+          <span class="section">Edit Labor Rate</span>
+          <p id="editsiterow"></p>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editsitename">Site Name <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editsitename" name="editsitename" required="required" type="text" data-validate-length-range="1,20" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="item form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="editsiteid">Site Id <span class="required">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <input id="editsiteid" type="number" name="editsiteid" required="required" data-validate-minmax="0,1000000" min="0" step="1" class="form-control col-md-7 col-xs-12">
+            </div>
+          </div>
+          <div class="modal-footer">
+              <button data-dismiss="modal" class="btn btn-primary">Cancel</button>
+              <button id="editsite_modal_save" class="btn btn-success">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
