@@ -1,9 +1,16 @@
 $(document).ready(function() {
   moment().format('YYYY-MM-DD');
   var ponumcookie = $.cookie('ponumcookie');
+  var labortabletab = $.cookie('labortabletab');
   if (typeof ponumcookie != 'undefined') {
     $("#ponum").val(ponumcookie);
   };
+
+  // $("li.active")
+  $("li.labortab").click(function(){
+    alert($(this).attr("id"));
+  });
+
   $("#podate").val(moment().format('YYYY-MM-DD'));
 
   $("#addpo").click(function(){
