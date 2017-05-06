@@ -150,6 +150,7 @@ $MENU_TOGGLE.on('click', function() {
 
 // Panel toolbox
 $(document).ready(function() {
+
     $('.collapse-link').on('click', function() {
         var $BOX_PANEL = $(this).closest('.x_panel'),
             $ICON = $(this).find('i'),
@@ -1654,12 +1655,12 @@ if (typeof NProgress != 'undefined') {
 				};
 
 				var optionSet1 = {
-				  startDate: moment().subtract(29, 'days'),
+				  startDate: moment().subtract(0, 'days'),
 				  endDate: moment(),
 				  minDate: '01/01/2012',
-				  maxDate: '12/31/2020',
+				  maxDate: '12/31/2030',
 				  dateLimit: {
-					days: 60
+					days: 365
 				  },
 				  showDropdowns: true,
 				  showWeekNumbers: true,
@@ -1692,7 +1693,7 @@ if (typeof NProgress != 'undefined') {
 				  }
 				};
 
-				$('#reportrange_right span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+				// $('#reportrange_right span').html(moment().subtract(0, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
 
 				$('#reportrange_right').daterangepicker(optionSet1, cb);
 

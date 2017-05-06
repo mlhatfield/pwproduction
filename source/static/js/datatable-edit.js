@@ -5,13 +5,22 @@ $(document).ready(function() {
   if (typeof ponumcookie != 'undefined') {
     $("#ponum").val(ponumcookie);
   };
+  if (typeof labortabletab != 'undefined') {
+    $('.nav-tabs a[href="'+labortabletab+'"]').tab('show')
+  };
 
-  // $("li.active")
-  $("li.labortab").click(function(){
-    alert($(this).attr("id"));
+  $(".labortab li").click(function(){
+    var tablink = $(this).find('a').attr("href");
+    $.cookie('labortabletab', tablink);
   });
 
   $("#podate").val(moment().format('YYYY-MM-DD'));
+
+  $('.labor-report-date').on('apply.daterangepicker', function(ev, picker) {
+    GetLaborReport(picker.startDate.format('YYYY-MM-DD'), picker.endDate.format('YYYY-MM-DD'));
+    // alert(picker.startDate.format('YYYY-MM-DD') + " to " + picker.endDate.format('YYYY-MM-DD'));
+  });
+
 
   $("#addpo").click(function(){
     var ponum = $("#ponum").val();
@@ -19,7 +28,7 @@ $(document).ready(function() {
     var polabor = $("#polabor option:selected").val();
     var podate = $("#podate").val();
     var pounit = $("#pounit").val();
-    var poworker = $("#poworker").val();
+    var poworker = $("#poworker option:selected").val();
     CreatePO(ponum, polabor, podate, pounit, poworker);
   });
 
@@ -42,8 +51,8 @@ $(document).ready(function() {
     var rowid = $("#editporow").val();
     var podate = $("#editpodate").val();
     var ponum = $("#editponum").val();
-    var poworker = $("#editpoworker").val();
-    var polabor = $("#editpolabor").val();
+    var poworker = $("#editpoworker option:selected").val();
+    var polabor = $("#editpolabor option:selected").val();
     var pounit = $("#editpounit").val();
     UpdatePO(rowid, ponum, polabor, podate, pounit, poworker);
   });
@@ -368,6 +377,21 @@ $(document).ready(function() {
       },
       dataType: "json"
     });
+  }
+
+  function GetLaborReport(start_date, end_date){
+    var href = "/labor-report?start_date="+start_date+"&end_date="+end_date;
+    $.ajax({
+      type: "GET",
+      contentType: "application/json; charset=utf-8",
+      url: href,
+      // data: JSON.stringify({"costrowid":"costrowid"}),
+      success: function (data) {
+        // window.location.reload();
+      },
+      dataType: "json"
+    });
+    window.location = href;  // redirect browser to link
   }
 
 } );

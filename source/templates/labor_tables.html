@@ -12,10 +12,10 @@
 
           <div class="col-md-12 col-sm-12 col-xs-12">
             <ul class="nav nav-tabs labortab">
-              <li class="active labortab"><a data-toggle="tab" href="#labor-rates">Labor Rates</a></li>
-              <li><a data-toggle="tab" href="#employees">Employees</a></li>
-              <li><a data-toggle="tab" href="#sites">Sites</a></li>
-              <li><a data-toggle="tab" href="#cost-tables">Cost Table</a></li>
+              <li id="labortab"><a data-toggle="tab" href="#labor-rates">Labor Rates</a></li>
+              <li id="employeetab"><a data-toggle="tab" href="#employees">Employees</a></li>
+              <li id="sitetab"><a data-toggle="tab" href="#sites">Sites</a></li>
+              <li id="costtab"><a data-toggle="tab" href="#cost-tables">Cost Table</a></li>
             </ul>
             <div class="tab-content">
 
@@ -161,7 +161,7 @@
                       Cost: <input id="costtype" type="text" data-validate-words="2" data-validate-length-range="1,20">
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
-                      Amount: <input id="costamount" type="text" data-validate-length-range="1,20">
+                      Amount: <input id="costamount" type="number" name="costamount" min="0" step="0.01" value="0">
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-12 form-group pull-left">
                       UoM: <select id="costuom">

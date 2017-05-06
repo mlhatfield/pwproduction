@@ -4,7 +4,7 @@ from flask import Flask, Response, redirect, url_for, request, session, abort, \
 from flask.ext.login import LoginManager, UserMixin, \
                                 login_required, login_user, logout_user
 from Crypto.Cipher import XOR
-import base64, os, sys, json
+import base64, os, sys, json, datetime
 import sqlite3
 import flask_login
 
@@ -39,9 +39,9 @@ if os.path.exists('labor.db') == False:
     conn = sqlite3.connect('labor.db')
     c = conn.cursor()
     c.execute('''CREATE TABLE labor (siteid text, sitename text, po text, podate date, labortype text, workername text, units text, submitted boolean)''')
-    q = '''INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')'''.format("admin",
-                                                                    "Jims Site","111", "01/01/1999","forklift", "Jimm Sweeney", "8",False)
+    q = '''INSERT INTO labor VALUES ('admin','Jims Site','111','2017-01-01','forklift','Jim Sweeney','8','False')'''
     c.execute(q)
+    c.execute('''INSERT INTO labor VALUES ('admin','Jims Site','111','2017-05-18','forklift','Jim Sweeney','8','False')''')
 
     c.execute('''CREATE TABLE rate (labortype text, payrate REAL, billrate REAL, uom text)''')
     c.execute('''INSERT INTO rate VALUES ('General Labor Hourly','10.11','13.0000','Hour')''')
@@ -258,9 +258,13 @@ def po_management():
     strqry = """SELECT labortype FROM rate"""
     q = c.execute(strqry)
     labor_selections = [row for row in q]
+
+    strqry = """SELECT employeename FROM employee"""
+    q = c.execute(strqry)
+    employee_selections = [row for row in q]
     conn.close()
     print(u,file=sys.stderr)
-    return render_template('po_management.html', labor_data=labor_data, labor_selections=labor_selections)
+    return render_template('po_management.html', labor_data=labor_data, labor_selections=labor_selections, employee_selections=employee_selections)
 
 @app.route("/create-po-entry", methods=["POST"])
 def create_po_entry():
@@ -536,6 +540,28 @@ def delete_cost_entry():
         conn.commit()
         conn.close()
         return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route("/labor-report", methods=["GET"])
+@login_required
+def labor_report():
+    u = User(flask_login.current_user.role)
+    conn = sqlite3.connect('labor.db')
+    c = conn.cursor()
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    print("Date query:", file=sys.stderr)
+    print(start_date, end_date, file=sys.stderr)
+    if end_date == None or start_date == None:
+        start_date = datetime.datetime.today().strftime('%Y-%m-%d')
+        end_date = datetime.datetime.today().strftime('%Y-%m-%d')
+    if str(u) == "admin":
+        strqry = """SELECT *, rowid FROM labor WHERE submitted = 'True' AND podate BETWEEN '{}' AND '{}'""".format(start_date,end_date)
+    else:
+        strqry = """SELECT *, rowid FROM labor WHERE submitted = 'True' AND siteid = '{}' AND podate BETWEEN '{}' AND '{}'""".format(u,start_date,end_date)
+    q = c.execute(strqry)
+    labor_data = [row for row in q]
+    date_span = [datetime.datetime.strptime(start_date, "%Y-%m-%d").strftime("%b %d, %Y"),datetime.datetime.strptime(end_date, "%Y-%m-%d").strftime("%b %d, %Y")]
+    return render_template('labor_report.html', labor_data=labor_data, date_span=date_span)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, threaded=True, debug=True)
