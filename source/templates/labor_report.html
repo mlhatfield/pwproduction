@@ -32,25 +32,23 @@
                 <th>UoM</th>
                 <th>Bill Rate</th>
                 <th>Total Bill</th>
-                <th>Count</th>
               </tr>
             </thead>
             <tbody>
-              {% for r in labor_data %}
+              {% for r in labor_data.keys() %}
               <tr>
-                <td>{{r[8]}}</td>
-                <td>{{r[3]}}</td>
-                <td>{{r[2]}}</td>
-                <td></td>
-                <td>{{r[5]}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{r}}</td>
+                <td>{{labor_data[r]["Date"]}}</td>
+                <td>{{labor_data[r]["PO"]}}</td>
+                <td>{{labor_data[r]["Total"]}}</td>
+                <td>{{labor_data[r]["Employee"]}}</td>
+                <td>{{labor_data[r]["Laborpct"]}}</td>
+                <td>{{labor_data[r]["Pay"]}}</td>
+                <td>{{labor_data[r]["SiteName"]}}</td>
+                <td>{{labor_data[r]["SiteId"]}}</td>
+                <td>{{labor_data[r]["UoM"]}}</td>
+                <td>{{labor_data[r]["BillRate"]}}</td>
+                <td>{{labor_data[r]["TotalBill"]}}</td>
               </tr>
               {% endfor %}
             <tbody>

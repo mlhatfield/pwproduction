@@ -49,6 +49,7 @@ if os.path.exists('labor.db') == False:
     c.execute('''INSERT INTO employee VALUES ('Jim Sweeney','20207')''')
     c.execute('''CREATE TABLE site (sitename text, sid integer)''')
     c.execute('''INSERT INTO site VALUES ('Carolina Bay, SC','9205')''')
+    c.execute('''INSERT INTO site VALUES ('Admin','admin')''')
     c.execute('''CREATE TABLE cost (costtype text, amount real, uom text)''')
     c.execute('''INSERT INTO cost VALUES ('Supervisor','966.00', 'dollar')''')
     c.execute('''CREATE TABLE calendar (month integer, quarter integer, year integer, fw integer)''')
@@ -276,9 +277,11 @@ def create_po_entry():
         podate = data["podate"]
         poworker = data["poworker"]
         pounit = data["pounit"]
-        strqry = """INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')""".format(u,"test-site", ponum, podate, polabor, poworker, pounit,False)
         conn = sqlite3.connect('labor.db')
         c = conn.cursor()
+        sidqry = """SELECT sitename FROM site WHERE sid = '{}'""".format(u)
+        s = [x for x in c.execute(sidqry)]
+        strqry = """INSERT INTO labor VALUES ('{}','{}','{}','{}','{}','{}','{}','{}')""".format(u,s[0][0], ponum, podate, polabor, poworker, pounit,False)
         q = c.execute(strqry)
         conn.commit()
         conn.close()
@@ -560,8 +563,42 @@ def labor_report():
         strqry = """SELECT *, rowid FROM labor WHERE submitted = 'True' AND siteid = '{}' AND podate BETWEEN '{}' AND '{}'""".format(u,start_date,end_date)
     q = c.execute(strqry)
     labor_data = [row for row in q]
+    # print(labor_data,file=sys.stderr)
+
+    rate_data = {}
+    q = c.execute("""SELECT * FROM rate""")
+    for row in q:
+        rate_data[row[0]] = {"payrate": row[1], "billrate": row[2], "uom": row[3]}
+
+    labor_ct = {}
+    for c in labor_data:
+        if c[2] not in labor_ct.keys():
+            labor_ct[c[2]] = {"count":1, "units": float(c[6])}
+        else:
+            labor_ct[c[2]]["count"] += 1
+            labor_ct[c[2]]["units"] += float(c[6])
+
+    # print(labor_ct, file=sys.stderr)
+
+    data_calcs = {}
+
+    for laborrow in labor_data:
+        if int(labor_ct[laborrow[2]]["units"]) != 0:
+            print(int(labor_ct[laborrow[2]]["units"]), file=sys.stderr)
+            Laborpct = (float(laborrow[6])/float(labor_ct[laborrow[2]]["units"])) * 100
+            employee_pr = (float(labor_ct[laborrow[2]]["units"]) * float(rate_data[laborrow[4]]["payrate"])) * (float(Laborpct)/100)
+        else:
+            Laborpct = 0
+            employee_pr = 0
+        data_calcs[str(laborrow[8])] = {"Date": laborrow[3],"PO": laborrow[2],"Total": laborrow[6], "Employee": laborrow[5],
+            "Laborpct": "{}".format(Laborpct),"Pay": "{}".format(employee_pr),"SiteName": laborrow[1],"SiteId": laborrow[0],
+            "UoM": rate_data[laborrow[4]]["uom"],"BillRate": rate_data[laborrow[4]]["billrate"],"TotalBill": (float(rate_data[laborrow[4]]["billrate"]) * float(laborrow[6])) }
+
+
+    # print(data_calcs,file=sys.stderr)
+
     date_span = [datetime.datetime.strptime(start_date, "%Y-%m-%d").strftime("%b %d, %Y"),datetime.datetime.strptime(end_date, "%Y-%m-%d").strftime("%b %d, %Y")]
-    return render_template('labor_report.html', labor_data=labor_data, date_span=date_span)
+    return render_template('labor_report.html', labor_data=data_calcs, date_span=date_span)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001, threaded=True, debug=True)
