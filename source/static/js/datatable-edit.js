@@ -30,6 +30,7 @@ $(document).ready(function() {
     var pounit = $("#pounit").val();
     var poworker = $("#poworker option:selected").val();
     CreatePO(ponum, polabor, podate, pounit, poworker);
+    return false;
   });
 
   $(".editpo").click(function(){
